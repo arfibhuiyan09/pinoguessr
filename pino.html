@@ -282,10 +282,10 @@
 
   <script>
 const piano = document.getElementById('piano');
-let currentAudio = null;
-let distortionEnabled = false; // Added flag for distortion
+    let currentAudio = null;
+    let distortionEnabled = false;
 
-const distortedPaths = {
+    const distortedPaths = {
   'C': 'https://arfibhuiyan09.github.io/pinoguessr/pino-sounds/distort4.mp3',
   'C#': 'https://arfibhuiyan09.github.io/pinoguessr/pino-sounds/distort1.mp3',
   'D': 'https://arfibhuiyan09.github.io/pinoguessr/pino-sounds/istort7.mp3',
@@ -302,55 +302,50 @@ const distortedPaths = {
 
 
 const originalPaths = {
-  'C': 'https://arfibhuiyan09.github.io/pinoguessr/pino-sounds/7.mp3',
-  'C#': 'https://arfibhuiyan09.github.io/pinoguessr/pino-sounds/1.mp3',
-  'D': 'https://arfibhuiyan09.github.io/pinoguessr/pino-sounds/5.mp3',
-  'D#': 'https://arfibhuiyan09.github.io/pinoguessr/pino-sounds/3.mp3',
-  'E': 'https://arfibhuiyan09.github.io/pinoguessr/pino-sounds/11.mp3',
-  'F': 'https://arfibhuiyan09.github.io/pinoguessr/pino-sounds/9.mp3',
-  'F#': 'https://arfibhuiyan09.github.io/pinoguessr/pino-sounds/2.mp3',
-  'G': 'https://arfibhuiyan09.github.io/pinoguessr/pino-sounds/10.mp3',
-  'G#': 'https://arfibhuiyan09.github.io/pinoguessr/pino-sounds/4.mp3',
-  'A': 'https://arfibhuiyan09.github.io/pinoguessr/pino-sounds/6.mp3',
-  'A#': 'https://arfibhuiyan09.github.io/pinoguessr/pino-sounds/8.mp3',
+  'C': 'https://arfibhuiyan09.github.io/pinoguessr/pino-sounds/Record (online-voice-recorder.com) (12).mp3',
+  'C#': 'https://arfibhuiyan09.github.io/pinoguessr/pino-sounds/Record (online-voice-recorder.com) (1).mp3',
+  'D': 'https://arfibhuiyan09.github.io/pinoguessr/pino-sounds/Record (online-voice-recorder.com) (10).mp3',
+  'D#': 'https://arfibhuiyan09.github.io/pinoguessr/pino-sounds/Record (online-voice-recorder.com) (8).mp3',
+  'E': 'https://arfibhuiyan09.github.io/pinoguessr/pino-sounds/Record (online-voice-recorder.com) (16).mp3',
+  'F': 'https://arfibhuiyan09.github.io/pinoguessr/pino-sounds/Record (online-voice-recorder.com) (14).mp3',
+  'F#': 'https://arfibhuiyan09.github.io/pinoguessr/pino-sounds/Record (online-voice-recorder.com) (7).mp3',
+  'G': 'https://arfibhuiyan09.github.io/pinoguessr/pino-sounds/Record (online-voice-recorder.com) (15).mp3',
+  'G#': 'https://arfibhuiyan09.github.io/pinoguessr/pino-sounds/Record (online-voice-recorder.com) (9).mp3',
+  'A': 'https://arfibhuiyan09.github.io/pinoguessr/pino-sounds/Record (online-voice-recorder.com) (11).mp3',
+  'A#': 'https://arfibhuiyan09.github.io/pinoguessr/pino-sounds/Record (online-voice-recorder.com) (13).mp3',
   'B': 'https://arfibhuiyan09.github.io/pinoguessr/pino-sounds/fnaf-1-ASM.mp3'
 };
 
 
-const distortButton = document.getElementById('distortButton');
-distortButton.addEventListener('click', toggleDistortion);
+    const distortButton = document.getElementById('distortButton');
+    distortButton.addEventListener('click', toggleDistortion);
 
+    function toggleDistortion() {
+      distortionEnabled = !distortionEnabled;
+    }
 
-function toggleDistortion() {
-  distortionEnabled = !distortionEnabled;
-}
+    piano.addEventListener('mousedown', playNote);
 
+    function playNote(event) {
+      const note = event.target.dataset.note;
+      if (note) {
+        stopCurrentAudio();
+        const audio = new Audio(getAudioPath(note));
+        audio.play();
+        currentAudio = audio;
+      }
+    }
 
-piano.addEventListener('mousedown', playNote);
+    function stopCurrentAudio() {
+      if (currentAudio) {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+      }
+    }
 
-
-function playNote(event) {
-  const note = event.target.dataset.note;
-  if (note) {
-    stopCurrentAudio();
-    const audio = new Audio(getAudioPath(note));
-    audio.play();
-    currentAudio = audio;
-  }
-}
-
-
-function stopCurrentAudio() {
-  if (currentAudio) {
-    currentAudio.pause();
-    currentAudio.currentTime = 0;
-  }
-}
-
-
-function getAudioPath(note) {
-  return distortionEnabled ? distortedPaths[note] || '' : originalPaths[note] || '';
-}
+    function getAudioPath(note) {
+      return distortionEnabled ? distortedPaths[note] || '' : originalPaths[note] || '';
+    }
   </script>
 </body>
 </html>
